@@ -2,20 +2,20 @@ import {useEffect, useState} from 'react';
 import {Alert, Button, Card, Col, Container, ListGroup, Row} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
-import {useCart} from '../context/CartContext';
+import {useFlyRequest} from '../context/FlyRequestContext';
 
-function CartPage() {
-  const {cart, removeFromCart, clearCart} = useCart();
+function FlyRequestPage() {
+  const {flyRequest, removeFromFlyRequest, clearFlyRequest} = useFlyRequest();
   const [totalTime, setTotalTime] = useState({hours: 0, minutes: 0, seconds: 0});
 
   useEffect(() => {
     calculateTotalTime();
-  }, [cart]);
+  }, [flyRequest]);
 
   const calculateTotalTime = () => {
     let totalHours = 0;
 
-    cart.forEach(item => {
+    flyRequest.forEach(item => {
       const dist = parseFloat(item.params.distance);
       const spd = parseFloat(item.params.speed);
       if (dist > 0 && spd > 0) {
@@ -54,7 +54,7 @@ function CartPage() {
 
   const breadcrumbItems = [
     {label: 'Главная', path: '/'},
-    {label: 'Корзина', path: null},
+    {label: 'Заявка', path: null},
   ];
 
   return (
@@ -62,22 +62,22 @@ function CartPage() {
       <Breadcrumbs items={breadcrumbItems} />
       <Container className='py-4'>
         <div className='d-flex justify-content-between align-items-center mb-4'>
-          <h2>Заявка #{cart.length > 0 ? '1' : '0'}</h2>
-          {cart.length > 0 && (
+          <h2>Заявка #{flyRequest.length > 0 ? '1' : '0'}</h2>
+          {flyRequest.length > 0 && (
             <div className='text-muted'>
-              В корзине {cart.length} {cart.length === 1 ? 'услуга' : 'услуги'}
+              В заявке {flyRequest.length} {flyRequest.length === 1 ? 'румб' : 'румба'}
             </div>
           )}
         </div>
 
-        {cart.length === 0 ? (
+        {flyRequest.length === 0 ? (
           <Alert variant='info'>
-            Корзина пуста. <Link to='/'>Перейти к услугам</Link>
+            Заявка пуста. <Link to='/'>Перейти к румбам</Link>
           </Alert>
         ) : (
           <>
             <Row className='g-4 mb-4'>
-              {cart.map((item, index) => (
+              {flyRequest.map((item, index) => (
                 <Col md={12} key={item.id}>
                   <Card className='shadow-sm'>
                     <Card.Body>
@@ -125,7 +125,7 @@ function CartPage() {
                           <Button
                             variant='outline-danger'
                             size='sm'
-                            onClick={() => removeFromCart(item.id)}>
+                            onClick={() => removeFromFlyRequest(item.id)}>
                             Удалить
                           </Button>
                         </Col>
@@ -152,8 +152,8 @@ function CartPage() {
             </Card>
 
             <div className='text-center mt-4'>
-              <Button variant='outline-secondary' className='me-2' onClick={clearCart}>
-                Очистить корзину
+              <Button variant='outline-secondary' className='me-2' onClick={clearFlyRequest}>
+                Очистить заявку
               </Button>
               <Button variant='info' className='text-white'>
                 Оформить заказ
@@ -166,4 +166,4 @@ function CartPage() {
   );
 }
 
-export default CartPage;
+export default FlyRequestPage;

@@ -1,12 +1,12 @@
 import {Badge, Container, Nav, Navbar} from 'react-bootstrap';
 import {Link, useLocation} from 'react-router-dom';
-import {useCart} from '../context/CartContext';
+import {useFlyRequest} from '../context/FlyRequestContext';
 
 function NavigationBar() {
   const location = useLocation();
-  const {cart} = useCart();
+  const {flyRequest} = useFlyRequest();
 
-  const cartItemsCount = cart.reduce((sum, item) => sum + 1, 0);
+  const flyRequestItemsCount = flyRequest.reduce((sum, item) => sum + 1, 0);
 
   return (
     <Navbar bg='white' expand='lg' className='border-bottom shadow-sm'>
@@ -20,11 +20,11 @@ function NavigationBar() {
             <Nav.Link as={Link} to='/' active={location.pathname === '/'}>
               Главная
             </Nav.Link>
-            <Nav.Link as={Link} to='/cart' active={location.pathname === '/cart'}>
-              Корзина
-              {cartItemsCount > 0 && (
+            <Nav.Link as={Link} to='/flyRequest' active={location.pathname === '/flyRequest'}>
+              Заявка
+              {flyRequestItemsCount > 0 && (
                 <Badge bg='info' className='ms-2'>
-                  {cartItemsCount}
+                  {flyRequestItemsCount}
                 </Badge>
               )}
             </Nav.Link>

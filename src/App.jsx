@@ -1,23 +1,23 @@
 import {Route, BrowserRouter as Router, Routes} from 'react-router-dom';
 import './App.css';
 import NavigationBar from './components/NavigationBar';
-import {CartProvider} from './context/CartContext';
-import CartPage from './pages/CartPage';
+import {FlyRequestProvider} from './context/FlyRequestContext';
+import FlyRequestPage from './pages/FlyRequestPage';
 import HomePage from './pages/HomePage';
-import ServiceDetailPage from './pages/ServiceDetailPage';
+import RumbDetailPage from './pages/RumbDetailPage';
 
 function App() {
   return (
-    <CartProvider>
+    <FlyRequestProvider>
       <Router>
         <NavigationBar />
         <Routes>
           <Route path='/' element={<HomePage />} />
-          <Route path='/service/:id' element={<ServiceDetailPage />} />
-          <Route path='/cart' element={<CartPage />} />
+          <Route path='/rumb/:id' element={<RumbDetailPage />} />
+          <Route path='/flyRequest' element={<FlyRequestPage />} />
         </Routes>
       </Router>
-    </CartProvider>
+    </FlyRequestProvider>
   );
 }
 

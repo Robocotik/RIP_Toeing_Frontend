@@ -1,5 +1,5 @@
-// Mock данные для услуг
-export const mockServices = [
+// Mock данные для румбов
+export const mockRumbs = [
   {
     id: 1,
     direction: 'Север',
@@ -74,37 +74,37 @@ export const mockServices = [
   },
 ];
 
-// Функция для получения всех услуг
-export const fetchServices = async (filters = {}) => {
+// Функция для получения всех румбов
+export const fetchRumbs = async (filters = {}) => {
   // Имитация задержки сети
   await new Promise(resolve => setTimeout(resolve, 300));
 
-  let services = [...mockServices];
+  let rumbs = [...mockRumbs];
 
   // Фильтрация по поиску
   if (filters.search) {
-    services = services.filter(
-      s =>
-        s.direction.toLowerCase().includes(filters.search.toLowerCase()) ||
-        s.description.toLowerCase().includes(filters.search.toLowerCase()),
+    rumbs = rumbs.filter(
+      r =>
+        r.direction.toLowerCase().includes(filters.search.toLowerCase()) ||
+        r.description.toLowerCase().includes(filters.search.toLowerCase()),
     );
   }
 
   // Фильтрация по минимальной цене
   if (filters.minPrice) {
-    services = services.filter(s => s.price >= Number(filters.minPrice));
+    rumbs = rumbs.filter(r => r.price >= Number(filters.minPrice));
   }
 
   // Фильтрация по максимальной цене
   if (filters.maxPrice) {
-    services = services.filter(s => s.price <= Number(filters.maxPrice));
+    rumbs = rumbs.filter(r => r.price <= Number(filters.maxPrice));
   }
 
-  return services;
+  return rumbs;
 };
 
-// Функция для получения одной услуги по ID
-export const fetchServiceById = async id => {
+// Функция для получения одного румба по ID
+export const fetchRumbById = async id => {
   await new Promise(resolve => setTimeout(resolve, 200));
-  return mockServices.find(s => s.id === Number(id));
+  return mockRumbs.find(r => r.id === Number(id));
 };

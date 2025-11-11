@@ -1,6 +1,6 @@
 import {Button, Col, Form, Row} from 'react-bootstrap';
 
-function ServiceFilters({filters, onFilterChange, onSearch, onReset}) {
+function RumbFilters({filters, onFilterChange, onSearch, onReset}) {
   const handleChange = e => {
     const {name, value} = e.target;
     onFilterChange({...filters, [name]: value});
@@ -40,4 +40,4 @@ function ServiceFilters({filters, onFilterChange, onSearch, onReset}) {
   );
 }
 
-export default ServiceFilters;
+export default RumbFilters;

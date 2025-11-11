@@ -1,16 +1,16 @@
 import {useEffect, useState} from 'react';
 import {Alert, Button, Card, Col, Container, Form, Row, Spinner} from 'react-bootstrap';
 import {useNavigate, useParams} from 'react-router-dom';
-import {getServiceById} from '../api/services';
+import {getRumbById} from '../api/rumbs';
 import Breadcrumbs from '../components/Breadcrumbs';
-import {useCart} from '../context/CartContext';
+import {useFlyRequest} from '../context/FlyRequestContext';
 
-function ServiceDetailPage() {
+function RumbDetailPage() {
   const {id} = useParams();
   const navigate = useNavigate();
-  const {addToCart} = useCart();
+  const {addToFlyRequest} = useFlyRequest();
 
-  const [service, setService] = useState(null);
+  const [rumb, setRumb] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [distance, setDistance] = useState('');
@@ -18,23 +18,23 @@ function ServiceDetailPage() {
   const [result, setResult] = useState(null);
 
   useEffect(() => {
-    loadService();
+    loadRumb();
   }, [id]);
 
-  const loadService = async () => {
+  const loadRumb = async () => {
     setLoading(true);
     setError(null);
     try {
-      const data = await getServiceById(id);
+      const data = await getRumbById(id);
       if (data) {
-        setService(data);
+        setRumb(data);
         setDistance(data.distance.toString());
         setSpeed(data.speed.toString());
       } else {
-        setError('Услуга не найдена');
+        setError('Румб не найден');
       }
     } catch (err) {
-      setError('Ошибка при загрузке услуги');
+      setError('Ошибка при загрузке румба');
       console.error(err);
     } finally {
       setLoading(false);
@@ -57,10 +57,10 @@ function ServiceDetailPage() {
     }
   };
 
-  const handleAddToCart = () => {
-    if (service && distance && speed) {
-      addToCart(service, {distance, speed});
-      navigate('/cart');
+  const handleAddToFlyRequest = () => {
+    if (rumb && distance && speed) {
+      addToFlyRequest(rumb, {distance, speed});
+      navigate('/flyRequest');
     }
   };
 
@@ -81,10 +81,10 @@ function ServiceDetailPage() {
     );
   }
 
-  if (error || !service) {
+  if (error || !rumb) {
     return (
       <Container className='py-5'>
-        <Alert variant='danger'>{error || 'Услуга не найдена'}</Alert>
+        <Alert variant='danger'>{error || 'Румб не найден'}</Alert>
       </Container>
     );
   }
@@ -94,24 +94,24 @@ function ServiceDetailPage() {
       <Breadcrumbs items={breadcrumbItems} />
       <Container className='py-4'>
         <h2 className='text-center mb-4'>Румб ветра</h2>
-        <h3 className='text-center mb-5'>{service.direction}</h3>
+        <h3 className='text-center mb-5'>{rumb.direction}</h3>
 
         <Row className='justify-content-center'>
           <Col md={8}>
             <Card className='shadow-sm'>
               <Card.Img
                 variant='top'
-                src={service.image || defaultImage}
-                alt={service.direction}
+                src={rumb.image || defaultImage}
+                alt={rumb.direction}
                 style={{height: '300px', objectFit: 'cover'}}
               />
               <Card.Body>
-                <Card.Text className='mb-4'>{service.description}</Card.Text>
+                <Card.Text className='mb-4'>{rumb.description}</Card.Text>
 
                 <Form>
                   <Row className='mb-3'>
                     <Col md={4}>
-                      <Form.Label>{service.direction}</Form.Label>
+                      <Form.Label>{rumb.direction}</Form.Label>
                     </Col>
                     <Col md={3}>
                       <Form.Control
@@ -141,8 +141,8 @@ function ServiceDetailPage() {
                     <Button variant='info' className='me-2 text-white' onClick={calculateTime}>
                       Рассчитать время
                     </Button>
-                    <Button variant='success' onClick={handleAddToCart}>
-                      Добавить в корзину
+                    <Button variant='success' onClick={handleAddToFlyRequest}>
+                      Добавить в заявку
                     </Button>
                   </div>
 
@@ -161,4 +161,4 @@ function ServiceDetailPage() {
   );
 }
 
-export default ServiceDetailPage;
+export default RumbDetailPage;

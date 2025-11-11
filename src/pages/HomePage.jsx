@@ -1,12 +1,12 @@
 import {useEffect, useState} from 'react';
 import {Alert, Col, Container, Row, Spinner} from 'react-bootstrap';
-import {getServices} from '../api/services';
+import {getRumbs} from '../api/rumbs';
 import Breadcrumbs from '../components/Breadcrumbs';
-import ServiceCard from '../components/ServiceCard';
-import ServiceFilters from '../components/ServiceFilters';
+import RumbCard from '../components/RumbCard';
+import RumbFilters from '../components/RumbFilters';
 
 function HomePage() {
-  const [services, setServices] = useState([]);
+  const [rumbs, setRumbs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filters, setFilters] = useState({
@@ -15,15 +15,15 @@ function HomePage() {
     maxPrice: '',
   });
 
-  // Функция для загрузки услуг
-  const loadServices = async (appliedFilters = {}) => {
+  // Функция для загрузки румбов
+  const loadRumbs = async (appliedFilters = {}) => {
     setLoading(true);
     setError(null);
     try {
-      const data = await getServices(appliedFilters);
-      setServices(data);
+      const data = await getRumbs(appliedFilters);
+      setRumbs(data);
     } catch (err) {
-      setError('Ошибка при загрузке услуг');
+      setError('Ошибка при загрузке румбов');
       console.error(err);
     } finally {
       setLoading(false);
@@ -32,7 +32,7 @@ function HomePage() {
 
   // Загрузка данных при монтировании компонента
   useEffect(() => {
-    loadServices();
+    loadRumbs();
   }, []);
 
   // Обработчик изменения фильтров
@@ -42,7 +42,7 @@ function HomePage() {
 
   // Обработчик применения фильтров
   const handleSearch = () => {
-    loadServices(filters);
+    loadRumbs(filters);
   };
 
   // Обработчик сброса фильтров
@@ -53,7 +53,7 @@ function HomePage() {
       maxPrice: '',
     };
     setFilters(resetFilters);
-    loadServices(resetFilters);
+    loadRumbs(resetFilters);
   };
 
   const breadcrumbItems = [{label: 'Главная', path: null}];
@@ -71,7 +71,7 @@ function HomePage() {
           </p>
         </div>
 
-        <ServiceFilters
+        <RumbFilters
           filters={filters}
           onFilterChange={handleFilterChange}
           onSearch={handleSearch}
@@ -81,21 +81,19 @@ function HomePage() {
         {loading && (
           <div className='text-center py-5'>
             <Spinner animation='border' variant='info' />
-            <p className='mt-3'>Загрузка услуг...</p>
+            <p className='mt-3'>Загрузка румбов...</p>
           </div>
         )}
 
         {error && <Alert variant='danger'>{error}</Alert>}
 
-        {!loading && !error && services.length === 0 && (
-          <Alert variant='info'>Услуги не найдены</Alert>
-        )}
+        {!loading && !error && rumbs.length === 0 && <Alert variant='info'>Румбы не найдены</Alert>}
 
-        {!loading && !error && services.length > 0 && (
+        {!loading && !error && rumbs.length > 0 && (
           <Row xs={1} md={2} lg={3} xl={4} className='g-4'>
-            {services.map(service => (
-              <Col key={service.id}>
-                <ServiceCard service={service} />
+            {rumbs.map(rumb => (
+              <Col key={rumb.id}>
+                <RumbCard rumb={rumb} />
               </Col>
             ))}
           </Row>
