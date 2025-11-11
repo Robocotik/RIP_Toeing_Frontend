@@ -1,15 +1,22 @@
-import {useEffect, useState} from 'react';
-import {Alert, Button, Card, Col, Container, ListGroup, Row} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Alert, Button, Card, Col, Container, ListGroup, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
-import {useFlyRequest} from '../context/FlyRequestContext';
+import { useFlyRequest } from '../context/FlyRequestContext';
+
+interface TotalTime {
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
 
 function FlyRequestPage() {
-  const {flyRequest, removeFromFlyRequest, clearFlyRequest} = useFlyRequest();
-  const [totalTime, setTotalTime] = useState({hours: 0, minutes: 0, seconds: 0});
+  const { flyRequest, removeFromFlyRequest, clearFlyRequest } = useFlyRequest();
+  const [totalTime, setTotalTime] = useState<TotalTime>({ hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
     calculateTotalTime();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flyRequest]);
 
   const calculateTotalTime = () => {
@@ -29,10 +36,10 @@ function FlyRequestPage() {
     const seconds = (minutes - m) * 60;
     const s = Math.floor(seconds);
 
-    setTotalTime({hours: h, minutes: m, seconds: s});
+    setTotalTime({ hours: h, minutes: m, seconds: s });
   };
 
-  const calculateItemTime = (distance, speed) => {
+  const calculateItemTime = (distance: string, speed: string): string => {
     const dist = parseFloat(distance);
     const spd = parseFloat(speed);
 
@@ -53,8 +60,8 @@ function FlyRequestPage() {
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%2317a2b8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='12' fill='white'%3EToeing%3C/text%3E%3C/svg%3E";
 
   const breadcrumbItems = [
-    {label: 'Главная', path: '/'},
-    {label: 'Заявка', path: null},
+    { label: 'Главная', path: '/' },
+    { label: 'Заявка', path: null },
   ];
 
   return (
@@ -77,7 +84,7 @@ function FlyRequestPage() {
         ) : (
           <>
             <Row className='g-4 mb-4'>
-              {flyRequest.map((item, index) => (
+              {flyRequest.map((item) => (
                 <Col md={12} key={item.id}>
                   <Card className='shadow-sm'>
                     <Card.Body>
@@ -87,7 +94,7 @@ function FlyRequestPage() {
                             src={item.image || defaultImage}
                             alt={item.direction}
                             className='img-fluid rounded'
-                            style={{maxHeight: '100px', objectFit: 'cover'}}
+                            style={{ maxHeight: '100px', objectFit: 'cover' }}
                           />
                         </Col>
                         <Col md={7}>

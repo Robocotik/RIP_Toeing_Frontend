@@ -1,7 +1,12 @@
-import {Breadcrumb, Container} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import { Breadcrumb, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { BreadcrumbItem } from '../types';
 
-function Breadcrumbs({items}) {
+interface BreadcrumbsProps {
+  items: BreadcrumbItem[];
+}
+
+function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (
     <Container className='mt-3'>
       <Breadcrumb className='breadcrumb-custom'>
@@ -10,7 +15,7 @@ function Breadcrumbs({items}) {
             key={index}
             active={index === items.length - 1}
             linkAs={item.path ? Link : 'span'}
-            linkProps={item.path ? {to: item.path} : {}}>
+            linkProps={item.path ? { to: item.path } : {}}>
             {item.label}
           </Breadcrumb.Item>
         ))}

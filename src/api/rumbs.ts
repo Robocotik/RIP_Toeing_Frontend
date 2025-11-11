@@ -1,9 +1,10 @@
 import {fetchRumbById as fetchMockRumbById, fetchRumbs as fetchMockRumbs} from '../data/mockRumbs';
+import {Rumb, RumbFilters} from '../types';
 
 const API_BASE_URL = '/api';
 
 // Функция для получения всех румбов с фильтрацией
-export const getRumbs = async (filters = {}) => {
+export const getRumbs = async (filters: Partial<RumbFilters> = {}): Promise<Rumb[]> => {
   try {
     // Формируем query параметры
     const params = new URLSearchParams();
@@ -34,7 +35,7 @@ export const getRumbs = async (filters = {}) => {
 };
 
 // Функция для получения одного румба по ID
-export const getRumbById = async id => {
+export const getRumbById = async (id: string | number): Promise<Rumb | undefined> => {
   try {
     const response = await fetch(`${API_BASE_URL}/rumbs/${id}`, {
       method: 'GET',
