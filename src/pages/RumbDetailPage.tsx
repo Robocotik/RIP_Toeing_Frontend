@@ -127,58 +127,6 @@ function RumbDetailPage() {
             </Card>
           </Col>
         </Row>
-
-        <Row className='justify-content-center mt-4'>
-          <Col md={6}>
-            <Card className='shadow-sm'>
-              <Card.Body>
-                <Form>
-                  <Form.Group className='mb-3'>
-                    <Form.Label>Расстояние (км)</Form.Label>
-                    <Form.Control
-                      type='number'
-                      value={distance}
-                      onChange={(e) => setDistance(e.target.value)}
-                      placeholder='Введите расстояние'
-                    />
-                  </Form.Group>
-
-                  <Form.Group className='mb-3'>
-                    <Form.Label>Скорость (км/ч)</Form.Label>
-                    <Form.Control
-                      type='number'
-                      value={speed}
-                      onChange={(e) => setSpeed(e.target.value)}
-                      placeholder='Введите скорость'
-                    />
-                  </Form.Group>
-
-                  <div className='d-grid gap-2'>
-                    <Button variant='outline-info' onClick={calculateTime}>
-                      Рассчитать время
-                    </Button>
-                  </div>
-
-                  {result && (
-                    <Alert variant='info' className='mt-3'>
-                      <strong>Время полета:</strong> {result}
-                    </Alert>
-                  )}
-
-                  <div className='d-grid gap-2 mt-3'>
-                    <Button
-                      variant='info'
-                      onClick={handleAddToFlyRequest}
-                      disabled={!distance || !speed}
-                    >
-                      Добавить в заявку
-                    </Button>
-                  </div>
-                </Form>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
       </Container>
     </>
   );
