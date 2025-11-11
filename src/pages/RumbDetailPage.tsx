@@ -1,15 +1,13 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert, Button, Card, Col, Container, Form, Row, Spinner } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getRumbById } from '../api/rumbs';
 import Breadcrumbs from '../components/Breadcrumbs';
-import { useFlyRequest } from '../context/FlyRequestContext';
-import { Rumb } from '../types';
+import { FlyRequestItem, Rumb } from '../types';
 
 function RumbDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { addToFlyRequest } = useFlyRequest();
 
   const [rumb, setRumb] = useState<Rumb | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -63,7 +61,24 @@ function RumbDetailPage() {
 
   const handleAddToFlyRequest = () => {
     if (rumb && distance && speed) {
-      addToFlyRequest(rumb, { distance, speed });
+      const item: FlyRequestItem = {
+        ...rumb,
+        params: { distance, speed },
+      };
+
+      // Получаем текущую корзину из localStorage
+      const saved = localStorage.getItem('flyRequest');
+      const currentFlyRequest: FlyRequestItem[] = saved ? JSON.parse(saved) : [];
+
+      // Добавляем новый элемент
+      const updatedFlyRequest = [...currentFlyRequest, item];
+
+      // Сохраняем в localStorage
+      localStorage.setItem('flyRequest', JSON.stringify(updatedFlyRequest));
+
+      // Вызываем событие для обновления NavigationBar
+      window.dispatchEvent(new Event('flyRequestUpdated'));
+
       navigate('/flyRequest');
     }
   };
@@ -109,7 +124,58 @@ function RumbDetailPage() {
                 alt={rumb.direction}
                 style={{ height: '100%', width: '100%', objectFit: 'cover' }}
               />
+            </Card>
+          </Col>
+        </Row>
 
+        <Row className='justify-content-center mt-4'>
+          <Col md={6}>
+            <Card className='shadow-sm'>
+              <Card.Body>
+                <Form>
+                  <Form.Group className='mb-3'>
+                    <Form.Label>Расстояние (км)</Form.Label>
+                    <Form.Control
+                      type='number'
+                      value={distance}
+                      onChange={(e) => setDistance(e.target.value)}
+                      placeholder='Введите расстояние'
+                    />
+                  </Form.Group>
+
+                  <Form.Group className='mb-3'>
+                    <Form.Label>Скорость (км/ч)</Form.Label>
+                    <Form.Control
+                      type='number'
+                      value={speed}
+                      onChange={(e) => setSpeed(e.target.value)}
+                      placeholder='Введите скорость'
+                    />
+                  </Form.Group>
+
+                  <div className='d-grid gap-2'>
+                    <Button variant='outline-info' onClick={calculateTime}>
+                      Рассчитать время
+                    </Button>
+                  </div>
+
+                  {result && (
+                    <Alert variant='info' className='mt-3'>
+                      <strong>Время полета:</strong> {result}
+                    </Alert>
+                  )}
+
+                  <div className='d-grid gap-2 mt-3'>
+                    <Button
+                      variant='info'
+                      onClick={handleAddToFlyRequest}
+                      disabled={!distance || !speed}
+                    >
+                      Добавить в заявку
+                    </Button>
+                  </div>
+                </Form>
+              </Card.Body>
             </Card>
           </Col>
         </Row>

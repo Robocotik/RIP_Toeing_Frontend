@@ -40,15 +40,6 @@ export const mockRumbs: Rumb[] = [
   },
   {
     id: 5,
-    direction: 'Центр',
-    description: 'Выберите направление для вашего путешествия',
-    price: 0,
-    distance: 0,
-    speed: 0,
-    image: null,
-  },
-  {
-    id: 6,
     direction: 'Восток',
     description: 'Полет на восток - навстречу солнцу',
     price: 12000,
@@ -57,7 +48,7 @@ export const mockRumbs: Rumb[] = [
     image: 'http://localhost:9000/rumbs/arrow-east.svg',
   },
   {
-    id: 7,
+    id: 6,
     direction: 'Юго-Запад',
     description: 'Полет на юго-запад - средиземноморский рай',
     price: 21000,
@@ -66,7 +57,7 @@ export const mockRumbs: Rumb[] = [
     image: 'http://localhost:9000/rumbs/arrow-south-west.svg',
   },
   {
-    id: 8,
+    id: 7,
     direction: 'Юг',
     description: 'Полет на юг - теплые края ждут вас',
     price: 18000,
@@ -75,7 +66,7 @@ export const mockRumbs: Rumb[] = [
     image: 'http://localhost:9000/rumbs/arrow-south.svg',
   },
   {
-    id: 9,
+    id: 8,
     direction: 'Юго-Восток',
     description: 'Полет на юго-восток - азиатское приключение',
     price: 25000,

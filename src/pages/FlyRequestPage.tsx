@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Alert, Button, Card, Col, Container, ListGroup, Row } from 'react-bootstrap';
+import { Alert, Button, Card, Col, Container, ListGroup, Row, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { getUserFlyRequest } from '../api/rumbs';
 import Breadcrumbs from '../components/Breadcrumbs';
-import { useFlyRequest } from '../context/FlyRequestContext';
+import { FlyRequestItem } from '../types';
 
 interface TotalTime {
   hours: number;
@@ -11,13 +12,60 @@ interface TotalTime {
 }
 
 function FlyRequestPage() {
-  const { flyRequest, removeFromFlyRequest, clearFlyRequest } = useFlyRequest();
+  const [flyRequest, setFlyRequest] = useState<FlyRequestItem[]>([]);
   const [totalTime, setTotalTime] = useState<TotalTime>({ hours: 0, minutes: 0, seconds: 0 });
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    loadUserFlyRequest();
+  }, []);
 
   useEffect(() => {
     calculateTotalTime();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flyRequest]);
+
+  const loadUserFlyRequest = async () => {
+    setLoading(true);
+    try {
+      const userId = 1; // ID пользователя
+      const data = await getUserFlyRequest(userId);
+
+      if (data && data.items) {
+        // Обновляем состояние корзины из бэкенда
+        setFlyRequest(data.items);
+        localStorage.setItem('flyRequest', JSON.stringify(data.items));
+      } else {
+        // Если бэкенд недоступен, используем localStorage
+        const saved = localStorage.getItem('flyRequest');
+        if (saved) {
+          setFlyRequest(JSON.parse(saved));
+        }
+      }
+    } catch (error) {
+      console.error('Ошибка при загрузке корзины:', error);
+      // Fallback на localStorage
+      const saved = localStorage.getItem('flyRequest');
+      if (saved) {
+        setFlyRequest(JSON.parse(saved));
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const removeFromFlyRequest = (id: number) => {
+    const updatedFlyRequest = flyRequest.filter(item => item.id !== id);
+    setFlyRequest(updatedFlyRequest);
+    localStorage.setItem('flyRequest', JSON.stringify(updatedFlyRequest));
+    window.dispatchEvent(new Event('flyRequestUpdated'));
+  };
+
+  const clearFlyRequest = () => {
+    setFlyRequest([]);
+    localStorage.setItem('flyRequest', JSON.stringify([]));
+    window.dispatchEvent(new Event('flyRequestUpdated'));
+  };
 
   const calculateTotalTime = () => {
     let totalHours = 0;
@@ -37,9 +85,7 @@ function FlyRequestPage() {
     const s = Math.floor(seconds);
 
     setTotalTime({ hours: h, minutes: m, seconds: s });
-  };
-
-  const calculateItemTime = (distance: string, speed: string): string => {
+  }; const calculateItemTime = (distance: string, speed: string): string => {
     const dist = parseFloat(distance);
     const spd = parseFloat(speed);
 
@@ -63,6 +109,15 @@ function FlyRequestPage() {
     { label: 'Главная', path: '/' },
     { label: 'Заявка', path: null },
   ];
+
+  if (loading) {
+    return (
+      <Container className='py-5 text-center'>
+        <Spinner animation='border' variant='info' />
+        <p className='mt-3'>Загрузка корзины...</p>
+      </Container>
+    );
+  }
 
   return (
     <>

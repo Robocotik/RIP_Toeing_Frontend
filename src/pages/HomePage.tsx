@@ -91,11 +91,29 @@ function HomePage() {
 
         {!loading && !error && rumbs.length > 0 && (
           <Row xs={1} md={2} lg={3} className='g-4'>
-            {rumbs.map(rumb => (
-              <Col key={rumb.id}>
-                <RumbCard rumb={rumb} />
-              </Col>
-            ))}
+            {rumbs.map((rumb) => {
+              if (rumb.id === 5) {
+                return (
+                  <>
+                    <Col key={`${rumb.id}-center`}>
+                      <div className='rumb-card-center h-100'>
+                        <div className='rumb-card-image-wrapper'>
+                          {/* Центральная пустая карточка */}
+                        </div>
+                      </div>
+                    </Col>
+                    <Col key={rumb.id}>
+                      <RumbCard rumb={rumb} />
+                    </Col>
+                  </>
+                );
+              }
+              return (
+                <Col key={rumb.id}>
+                  <RumbCard rumb={rumb} />
+                </Col>
+              );
+            })}
           </Row>
         )}
       </Container>

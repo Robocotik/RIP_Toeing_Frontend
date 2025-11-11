@@ -1,12 +1,38 @@
-import {Badge, Container, Nav, Navbar} from 'react-bootstrap';
-import {Link, useLocation} from 'react-router-dom';
-import {useFlyRequest} from '../context/FlyRequestContext';
+import { useEffect, useState } from 'react';
+import { Badge, Container, Nav, Navbar } from 'react-bootstrap';
+import { Link, useLocation } from 'react-router-dom';
+import { FlyRequestItem } from '../types';
 
 function NavigationBar() {
   const location = useLocation();
-  const {flyRequest} = useFlyRequest();
+  const [flyRequestItemsCount, setFlyRequestItemsCount] = useState<number>(0);
 
-  const flyRequestItemsCount = flyRequest.reduce((sum, item) => sum + 1, 0);
+  useEffect(() => {
+    // Функция для обновления счетчика из localStorage
+    const updateCount = () => {
+      const saved = localStorage.getItem('flyRequest');
+      if (saved) {
+        const items: FlyRequestItem[] = JSON.parse(saved);
+        setFlyRequestItemsCount(items.length);
+      } else {
+        setFlyRequestItemsCount(0);
+      }
+    };
+
+    // Обновляем при монтировании
+    updateCount();
+
+    // Слушаем изменения localStorage
+    window.addEventListener('storage', updateCount);
+
+    // Кастомное событие для обновления счетчика
+    window.addEventListener('flyRequestUpdated', updateCount);
+
+    return () => {
+      window.removeEventListener('storage', updateCount);
+      window.removeEventListener('flyRequestUpdated', updateCount);
+    };
+  }, []);
 
   return (
     <Navbar bg='white' expand='lg' className='border-bottom shadow-sm'>
