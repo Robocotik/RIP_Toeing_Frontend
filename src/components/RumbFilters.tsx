@@ -65,8 +65,13 @@ function RumbFilters({ filters, onFilterChange, onSearch, onReset }: RumbFilters
     onFilterChange({ ...filters, [name]: value });
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSearch();
+  };
+
   return (
-    <Form className='mb-4 py-3 bg-white rounded'>
+    <Form className='mb-4 py-3 bg-white rounded' onSubmit={handleSubmit}>
       <Row className='g-3 justify-content-between align-items-center'>
         <Col md={6} lg={5}>
           <Form.Group className='position-relative'>
@@ -85,7 +90,7 @@ function RumbFilters({ filters, onFilterChange, onSearch, onReset }: RumbFilters
             />
             <Button
               variant='info'
-              onClick={onSearch}
+              type='submit'
               className='position-absolute text-white border-0'
               style={{
                 right: '5px',
