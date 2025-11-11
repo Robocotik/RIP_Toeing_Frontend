@@ -1,20 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Alert, Button, Card, Col, Container, Form, Row, Spinner } from 'react-bootstrap';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Alert, Card, Col, Container, Row, Spinner } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 import { getRumbById } from '../api/rumbs';
 import Breadcrumbs from '../components/Breadcrumbs';
-import { FlyRequestItem, Rumb } from '../types';
+import { Rumb } from '../types';
 
 function RumbDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
 
   const [rumb, setRumb] = useState<Rumb | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [distance, setDistance] = useState<string>('');
-  const [speed, setSpeed] = useState<string>('');
-  const [result, setResult] = useState<string | null>(null);
 
   useEffect(() => {
     loadRumb();
@@ -30,8 +26,6 @@ function RumbDetailPage() {
       const data = await getRumbById(id);
       if (data) {
         setRumb(data);
-        setDistance(data.distance.toString());
-        setSpeed(data.speed.toString());
       } else {
         setError('Румб не найден');
       }
@@ -41,48 +35,7 @@ function RumbDetailPage() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const calculateTime = () => {
-    const dist = parseFloat(distance);
-    const spd = parseFloat(speed);
-
-    if (dist > 0 && spd > 0) {
-      const hours = dist / spd;
-      const h = Math.floor(hours);
-      const minutes = (hours - h) * 60;
-      const m = Math.floor(minutes);
-      const seconds = (minutes - m) * 60;
-      const s = Math.floor(seconds);
-
-      setResult(`${h} ч. ${m} мин. ${s} сек.`);
-    }
-  };
-
-  const handleAddToFlyRequest = () => {
-    if (rumb && distance && speed) {
-      const item: FlyRequestItem = {
-        ...rumb,
-        params: { distance, speed },
-      };
-
-      // Получаем текущую корзину из localStorage
-      const saved = localStorage.getItem('flyRequest');
-      const currentFlyRequest: FlyRequestItem[] = saved ? JSON.parse(saved) : [];
-
-      // Добавляем новый элемент
-      const updatedFlyRequest = [...currentFlyRequest, item];
-
-      // Сохраняем в localStorage
-      localStorage.setItem('flyRequest', JSON.stringify(updatedFlyRequest));
-
-      // Вызываем событие для обновления NavigationBar
-      window.dispatchEvent(new Event('flyRequestUpdated'));
-
-      navigate('/flyRequest');
-    }
-  };
-
+  }
   const defaultImage =
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='%2317a2b8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='40' fill='white'%3EToeing%3C/text%3E%3C/svg%3E";
 
