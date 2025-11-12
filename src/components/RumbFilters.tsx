@@ -122,7 +122,7 @@ function RumbFilters({ filters, onFilterChange, onSearch, onReset }: RumbFilters
               transition: 'transform 0.2s, box-shadow 0.2s',
             }}>
             <div style={{ fontSize: '18px', fontWeight: '600', color: '#333', marginBottom: '4px' }}>
-              Заявка #{flyRequestId}
+              Заявка #-1
             </div>
             <div style={{ fontSize: '14px', color: '#666' }}>
               В корзине {flyRequestItemsCount} {flyRequestItemsCount === 1 ? 'услуга' : flyRequestItemsCount > 1 && flyRequestItemsCount < 5 ? 'услуги' : 'услуг'}
