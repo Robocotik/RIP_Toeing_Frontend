@@ -110,33 +110,25 @@ function RumbFilters({ filters, onFilterChange, onSearch, onReset }: RumbFilters
           </Form.Group>
         </Col>
         <Col xs='auto'>
-          <Link to='/flyRequest' style={{ textDecoration: 'none' }}>
-            <div
-              className='bg-white position-relative'
-              style={{
-                borderRadius: '15px',
-                padding: '16px 24px',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-                minWidth: '200px',
-                cursor: 'pointer',
-                transition: 'transform 0.2s, box-shadow 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
-              }}>
-              <div style={{ fontSize: '18px', fontWeight: '600', color: '#333', marginBottom: '4px' }}>
-                Заявка #{flyRequestId}
-              </div>
-              <div style={{ fontSize: '14px', color: '#666' }}>
-                В корзине {flyRequestItemsCount} {flyRequestItemsCount === 1 ? 'услуга' : flyRequestItemsCount > 1 && flyRequestItemsCount < 5 ? 'услуги' : 'услуг'}
-              </div>
+          {/* <Link to='/flyRequest' style={{ textDecoration: 'none' }}> */}
+          <div
+            className='bg-white position-relative'
+            style={{
+              borderRadius: '15px',
+              padding: '16px 24px',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+              minWidth: '200px',
+              // cursor: 'pointer',
+              transition: 'transform 0.2s, box-shadow 0.2s',
+            }}>
+            <div style={{ fontSize: '18px', fontWeight: '600', color: '#333', marginBottom: '4px' }}>
+              Заявка #{flyRequestId}
             </div>
-          </Link>
+            <div style={{ fontSize: '14px', color: '#666' }}>
+              В корзине {flyRequestItemsCount} {flyRequestItemsCount === 1 ? 'услуга' : flyRequestItemsCount > 1 && flyRequestItemsCount < 5 ? 'услуги' : 'услуг'}
+            </div>
+          </div>
+          {/* </Link> */}
         </Col>
       </Row>
     </Form>

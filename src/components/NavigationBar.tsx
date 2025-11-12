@@ -1,4 +1,4 @@
-import { Container, Navbar } from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 function NavigationBar() {
@@ -8,6 +8,7 @@ function NavigationBar() {
         <Navbar.Brand as={Link} to='/' className='toeing-logo'>
           Toeing
         </Navbar.Brand>
+        <Navbar.Toggle aria-controls='basic-navbar-nav' />
       </Container>
     </Navbar>
   );

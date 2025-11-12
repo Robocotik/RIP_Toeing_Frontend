@@ -41,6 +41,7 @@ function RumbDetailPage() {
 
   const breadcrumbItems = [
     { label: 'Главная', path: '/' },
+    { label: 'Румбы', path: '/rumbs' },
     { label: 'Румб ветра', path: null },
   ];
 

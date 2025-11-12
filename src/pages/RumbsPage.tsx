@@ -6,7 +6,7 @@ import RumbCard from '../components/RumbCard';
 import RumbFilters from '../components/RumbFilters';
 import { Rumb, RumbFilters as RumbFiltersType } from '../types';
 
-function HomePage() {
+function RumbsPage() {
   const [rumbs, setRumbs] = useState<Rumb[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -57,7 +57,10 @@ function HomePage() {
     loadRumbs(resetFilters);
   };
 
-  const breadcrumbItems = [{ label: 'Главная', path: null }];
+  const breadcrumbItems = [
+    { label: 'Главная', path: '/' },
+    { label: 'Румбы', path: null },
+  ];
 
   return (
     <>
@@ -121,4 +124,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default RumbsPage;
