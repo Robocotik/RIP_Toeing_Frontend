@@ -1,6 +1,5 @@
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import '../styles/RumbCard.css';
 import { Rumb } from '../types';
 
 interface RumbCardProps {
@@ -12,20 +11,25 @@ function RumbCard({ rumb }: RumbCardProps) {
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='150'%3E%3Crect width='200' height='150' fill='%2317a2b8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='20' fill='white'%3EToeing%3C/text%3E%3C/svg%3E";
 
   return (
-    <Link to={`/rumb/${rumb.id}`} style={{ textDecoration: 'none' }}>
-      <Card className='rumb-card h-100'>
-        <div className='rumb-card-image-wrapper'>
-          <Card.Img
-            src={rumb.image || defaultImage}
-            alt={rumb.direction}
-            className='rumb-card-image p-4'
-          />
-          <div className='rumb-card-overlay'>
-            <h5 className='rumb-card-title'>{rumb.direction}</h5>
+    <Card className='h-100 shadow-sm hover-shadow' style={{ cursor: 'pointer' }}>
+      <Link to={`/rumb/${rumb.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+        <Card.Img
+          variant='top'
+          src={rumb.image || defaultImage}
+          alt={rumb.direction}
+          style={{ height: '200px', objectFit: 'cover' }}
+        />
+        <Card.Body className='d-flex flex-column'>
+          <Card.Title>{rumb.direction}</Card.Title>
+          <Card.Text className='flex-grow-1'>
+            <small className='text-muted'>{rumb.description || 'Описание румба'}</small>
+          </Card.Text>
+          <div className='mt-2'>
+            <strong>Цена:</strong> {rumb.price} ₽
           </div>
-        </div>
-      </Card>
-    </Link>
+        </Card.Body>
+      </Link>
+    </Card>
   );
 }
 
