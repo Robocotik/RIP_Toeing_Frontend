@@ -1,6 +1,8 @@
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import {Route, BrowserRouter as Router, Routes} from 'react-router-dom';
 import './App.css';
 import NavigationBar from './components/NavigationBar';
+import NetworkStatus from './components/NetworkStatus';
+import PWAInstallPrompt from './components/PWAInstallPrompt';
 import FlyRequestPage from './pages/FlyRequestPage';
 import LandingPage from './pages/LandingPage';
 import RumbDetailPage from './pages/RumbDetailPage';
@@ -10,6 +12,8 @@ function App() {
   return (
     <Router>
       <NavigationBar />
+      <NetworkStatus />
+      <PWAInstallPrompt className='mx-3 mt-3' />
       <Routes>
         <Route path='/' element={<LandingPage />} />
         <Route path='/rumbs' element={<RumbsPage />} />
