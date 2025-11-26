@@ -1,12 +1,16 @@
 import react from '@vitejs/plugin-react';
 import {defineConfig} from 'vite';
 import {VitePWA} from 'vite-plugin-pwa';
+import mkcert from 'vite-plugin-mkcert';
+import fs from 'fs';
+import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '/RIP_Toeing_Frontend/',
   plugins: [
     react(),
+    mkcert(),
     VitePWA({
       registerType: 'prompt',
       devOptions: {
@@ -83,12 +87,18 @@ export default defineConfig({
     }),
   ],
   server: {
+    host: true,
+    port: 5173,
     proxy: {
       '/api': {
         target: 'http://localhost:8080',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api/, ''),
       },
+    },
+    https: {
+      key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
+      cert: fs.readFileSync(path.resolve(__dirname, 'cert.crt')),
     },
   },
 });

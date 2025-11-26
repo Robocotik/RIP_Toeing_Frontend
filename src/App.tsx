@@ -2,7 +2,6 @@ import {Route, BrowserRouter as Router, Routes} from 'react-router-dom';
 import './App.css';
 import NavigationBar from './components/NavigationBar';
 import NetworkStatus from './components/NetworkStatus';
-import PWADebug from './components/PWADebug';
 import PWAInstallPrompt from './components/PWAInstallPrompt';
 import PWAUpdatePrompt from './components/PWAUpdatePrompt';
 import FlyRequestPage from './pages/FlyRequestPage';
@@ -15,7 +14,6 @@ function App() {
     <Router>
       <NavigationBar />
       <NetworkStatus />
-      <PWADebug />
       <PWAUpdatePrompt />
       <PWAInstallPrompt className='mx-3 mt-3' />
       <Routes>
