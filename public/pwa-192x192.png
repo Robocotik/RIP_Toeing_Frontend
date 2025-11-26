@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <rect width="192" height="192" fill="#17a2b8" rx="20"/>
+  <text x="96" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" fill="white" font-weight="bold">Toeing</text>
+  <polygon points="96,40 106,60 86,60" fill="white" opacity="0.8"/>
+  <rect x="91" y="60" width="10" height="40" fill="white" opacity="0.8"/>
+</svg>

@@ -6,7 +6,8 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "preview:gh": "vite preview --base=/RIP_Toeing_Frontend/"
     },
     "dependencies": {
         "bootstrap": "^5.3.2",

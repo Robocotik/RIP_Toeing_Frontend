@@ -77,7 +77,7 @@ function FlyRequestPage() {
                     {/* Изображение */}
                     <Col xs={3} className='text-center'>
                       <img
-                        src={item.image || 'http://localhost:9000/rumbs/arrow-north.svg'}
+                        src={item.image || '/images/rumbs/arrow-north.svg'}
                         alt={item.direction}
                         style={{
                           maxWidth: '120px',

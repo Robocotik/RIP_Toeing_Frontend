@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="southEastGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fd7e14;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e55a00;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <polygon points="156,156 100,140 120,120" fill="url(#southEastGradient)" stroke="#ffffff" stroke-width="2"/>
+  <rect x="85" y="95" width="85" height="20" fill="url(#southEastGradient)" stroke="#ffffff" stroke-width="2" transform="rotate(-45 127.5 105)"/>
+</svg>

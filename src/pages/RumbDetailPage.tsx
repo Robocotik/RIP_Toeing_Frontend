@@ -75,7 +75,7 @@ function RumbDetailPage() {
         }}>
         <Card.Img
           variant='top'
-          src={rumb.image || `http://localhost:9000/rumbs/arrow-north.svg`}
+          src={rumb.image || `/images/rumbs/arrow-north.svg`}
           alt={rumb.direction}
           style={{
             height: '300px',
