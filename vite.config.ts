@@ -18,25 +18,13 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
         runtimeCaching: [
           {
-            urlPattern: /^http:\/\/localhost:9000\/rumbs\/.*/i,
+            urlPattern: /\/images\/rumbs\/.*/i,
             handler: 'CacheFirst',
             options: {
               cacheName: 'rumbs-images',
               expiration: {
                 maxEntries: 50,
                 maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
-              },
-            },
-          },
-          {
-            urlPattern: /^http:\/\/localhost:8080\/api\/.*/i,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'api-cache',
-              networkTimeoutSeconds: 3,
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 5 * 60, // 5 minutes
               },
             },
           },
@@ -50,8 +38,8 @@ export default defineConfig({
         theme_color: '#17a2b8',
         background_color: '#ffffff',
         display: 'standalone',
-        scope: '/',
-        start_url: '/',
+        scope: '/RIP_Toeing_Frontend/',
+        start_url: '/RIP_Toeing_Frontend/',
         icons: [
           {
             src: 'pwa-192x192.png',
