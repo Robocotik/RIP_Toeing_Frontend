@@ -9,7 +9,7 @@ export const mockRumbs: Rumb[] = [
     price: 19000,
     distance: 110,
     speed: 8,
-    image: '/images/rumbs/arrow-north-west.svg',
+    image: `${import.meta.env.BASE_URL}images/rumbs/arrow-north-west.svg`,
   },
   {
     id: 1,
@@ -18,7 +18,7 @@ export const mockRumbs: Rumb[] = [
     price: 15000,
     distance: 50,
     speed: 7,
-    image: '/images/rumbs/arrow-north.svg',
+    image: `${import.meta.env.BASE_URL}images/rumbs/arrow-north.svg`,
   },
   {
     id: 5,
@@ -27,7 +27,7 @@ export const mockRumbs: Rumb[] = [
     price: 16000,
     distance: 90,
     speed: 7,
-    image: '/images/rumbs/arrow-north-east.svg',
+    image: `${import.meta.env.BASE_URL}images/rumbs/arrow-north-east.svg`,
   },
   {
     id: 4,
@@ -36,7 +36,7 @@ export const mockRumbs: Rumb[] = [
     price: 22000,
     distance: 150,
     speed: 10,
-    image: '/images/rumbs/arrow-west.svg',
+    image: `${import.meta.env.BASE_URL}images/rumbs/arrow-west.svg`,
   },
   {
     id: 3,
@@ -45,7 +45,7 @@ export const mockRumbs: Rumb[] = [
     price: 12000,
     distance: 80,
     speed: 6,
-    image: '/images/rumbs/arrow-east.svg',
+    image: `${import.meta.env.BASE_URL}images/rumbs/arrow-east.svg`,
   },
   {
     id: 8,
@@ -54,7 +54,7 @@ export const mockRumbs: Rumb[] = [
     price: 21000,
     distance: 140,
     speed: 9,
-    image: '/images/rumbs/arrow-south-west.svg',
+    image: `${import.meta.env.BASE_URL}images/rumbs/arrow-south-west.svg`,
   },
   {
     id: 2,
@@ -63,7 +63,7 @@ export const mockRumbs: Rumb[] = [
     price: 18000,
     distance: 120,
     speed: 8,
-    image: '/images/rumbs/arrow-south.svg',
+    image: `${import.meta.env.BASE_URL}images/rumbs/arrow-south.svg`,
   },
   {
     id: 7,
@@ -72,7 +72,7 @@ export const mockRumbs: Rumb[] = [
     price: 25000,
     distance: 200,
     speed: 12,
-    image: '/images/rumbs/arrow-south-east.svg',
+    image: `${import.meta.env.BASE_URL}images/rumbs/arrow-south-east.svg`,
   },
 ];
 
