@@ -1,7 +1,5 @@
 import {ChangeEvent} from 'react';
 import {Button, Col, Form, Row} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
-import {useFlyRequest} from '../context/FlyRequestContext';
 import {RumbFilters as RumbFiltersType} from '../types';
 
 interface RumbFiltersProps {
@@ -12,10 +10,6 @@ interface RumbFiltersProps {
 }
 
 function RumbFilters({filters, onFilterChange, onSearch}: RumbFiltersProps) {
-  const {flyRequest} = useFlyRequest();
-
-  const flyRequestItemsCount = flyRequest.length;
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
     onFilterChange({...filters, [name]: value});
@@ -77,66 +71,7 @@ function RumbFilters({filters, onFilterChange, onSearch}: RumbFiltersProps) {
           </Form.Group>
         </Col>
         <Col xs='auto'>
-          <Link
-            to='/flyRequest'
-            className='position-relative'
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
-              backgroundColor: '#fff',
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-              transition: 'all 0.3s ease',
-              cursor: 'pointer',
-              textDecoration: 'none',
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.transform = 'scale(1.1)';
-              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
-            }}>
-            {/* Иконка корзины */}
-            <svg
-              width='24'
-              height='24'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='#333'
-              strokeWidth='2'
-              strokeLinecap='round'
-              strokeLinejoin='round'>
-              <circle cx='9' cy='21' r='1' />
-              <circle cx='20' cy='21' r='1' />
-              <path d='M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6' />
-            </svg>
-            {/* Badge с количеством */}
-            {flyRequestItemsCount > 0 && (
-              <span
-                style={{
-                  position: 'absolute',
-                  top: '0',
-                  right: '0',
-                  backgroundColor: '#dc3545',
-                  color: '#fff',
-                  borderRadius: '50%',
-                  width: '20px',
-                  height: '20px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '12px',
-                  fontWeight: '600',
-                }}>
-                {flyRequestItemsCount}
-              </span>
-            )}
-          </Link>
+          <div className='text-muted'>Поиск по румбам</div>
         </Col>
       </Row>
     </Form>

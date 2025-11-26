@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Alert, Col, Container, Row, Spinner} from 'react-bootstrap';
-import {getRumbs} from '../api/rumbs.ts';
+import {apiService} from '../api/apiService';
 import RumbCard from '../components/RumbCard';
 import RumbFilters from '../components/RumbFilters';
 import {Rumb, RumbFilters as RumbFiltersType} from '../types';
@@ -16,11 +16,11 @@ function RumbsPage() {
   });
 
   // Функция для загрузки румбов
-  const loadRumbs = async (appliedFilters: Partial<RumbFiltersType> = {}) => {
+  const loadRumbs = async () => {
     setLoading(true);
     setError(null);
     try {
-      const data = await getRumbs(appliedFilters);
+      const data = await apiService.getRumbs();
       setRumbs(data);
     } catch (err) {
       setError('Ошибка при загрузке румбов');
@@ -42,7 +42,7 @@ function RumbsPage() {
 
   // Обработчик применения фильтров
   const handleSearch = () => {
-    loadRumbs(filters);
+    loadRumbs();
   };
 
   // Обработчик сброса фильтров
@@ -53,7 +53,7 @@ function RumbsPage() {
       maxPrice: '',
     };
     setFilters(resetFilters);
-    loadRumbs(resetFilters);
+    loadRumbs();
   };
 
   return (
@@ -87,25 +87,25 @@ function RumbsPage() {
 
         {!loading && !error && rumbs.length > 0 && (
           <Row xs={1} md={2} lg={3} className='g-4'>
-            {rumbs.map(rumb => {
-              if (rumb.id === 3) {
+            {rumbs.map((rumb, key) => {
+              if (key === 4) {
                 return (
                   <>
-                    <Col key={`${rumb.id}-center`}>
+                    <Col key={`${rumb.ID}-center`}>
                       <div className='rumb-card-center h-100'>
                         <div className='rumb-card-image-wrapper'>
                           {/* Центральная пустая карточка */}
                         </div>
                       </div>
                     </Col>
-                    <Col key={rumb.id}>
+                    <Col key={rumb.ID}>
                       <RumbCard rumb={rumb} />
                     </Col>
                   </>
                 );
               }
               return (
-                <Col key={rumb.id}>
+                <Col key={rumb.ID}>
                   <RumbCard rumb={rumb} />
                 </Col>
               );

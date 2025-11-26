@@ -12,15 +12,15 @@ function RumbCard({rumb}: RumbCardProps) {
 
   return (
     <Card className='h-100 shadow-sm hover-shadow' style={{cursor: 'pointer'}}>
-      <Link to={`/rumb/${rumb.id}`} style={{textDecoration: 'none', color: 'inherit'}}>
+      <Link to={`/rumb/${rumb.ID}`} style={{textDecoration: 'none', color: 'inherit'}}>
         <Card.Img
           variant='top'
-          src={rumb.image || defaultImage}
-          alt={rumb.direction}
+          src={rumb.Image || defaultImage}
+          alt={rumb.Title}
           style={{height: '200px', objectFit: 'contain', padding: '20px'}}
         />
         <Card.Body className='d-flex flex-column align-items-center'>
-          <Card.Title>{rumb.direction}</Card.Title>
+          <Card.Title>{rumb.Title}</Card.Title>
         </Card.Body>
       </Link>
     </Card>

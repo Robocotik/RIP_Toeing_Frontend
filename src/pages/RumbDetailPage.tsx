@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Alert, Card, Container, Spinner} from 'react-bootstrap';
 import {useParams} from 'react-router-dom';
-import {getRumbById} from '../api/rumbs.ts';
+import {apiService} from '../api/apiService';
 import {Rumb} from '../types';
 
 function RumbDetailPage() {
@@ -22,7 +22,7 @@ function RumbDetailPage() {
     setLoading(true);
     setError(null);
     try {
-      const data = await getRumbById(id);
+      const data = await apiService.getRumbById(parseInt(id));
       if (data) {
         setRumb(data);
       } else {
@@ -61,7 +61,7 @@ function RumbDetailPage() {
           Румб ветра
         </h5>
         <h2 style={{fontSize: '32px', fontWeight: '600', color: '#000', marginBottom: '30px'}}>
-          {rumb.direction}
+          {rumb.Title}
         </h2>
       </div>
 
@@ -75,8 +75,8 @@ function RumbDetailPage() {
         }}>
         <Card.Img
           variant='top'
-          src={rumb.image || `http://localhost:9000/rumbs/arrow-north.svg`}
-          alt={rumb.direction}
+          src={rumb.Image}
+          alt={rumb.Title}
           style={{
             height: '300px',
             objectFit: 'contain',
@@ -84,11 +84,6 @@ function RumbDetailPage() {
             padding: '40px',
           }}
         />
-        <Card.Body>
-          <Card.Text style={{fontSize: '16px', color: '#666', textAlign: 'center'}}>
-            {rumb.description}
-          </Card.Text>
-        </Card.Body>
       </Card>
     </Container>
   );

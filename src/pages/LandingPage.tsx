@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Carousel, Container} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import {getRumbs} from '../api/rumbs.ts';
+import {apiService} from '../api/apiService';
 import {Rumb} from '../types';
 
 function LandingPage() {
@@ -14,7 +14,7 @@ function LandingPage() {
 
   const loadRumbs = async () => {
     try {
-      const data = await getRumbs();
+      const data = await apiService.getRumbs();
       setRumbs(data);
     } catch (error) {
       console.error('Ошибка загрузки румбов:', error);
@@ -95,9 +95,9 @@ function LandingPage() {
                 margin: '0 auto',
               }}>
               {rumbs.map(rumb => (
-                <Carousel.Item key={rumb.id}>
+                <Carousel.Item key={rumb.ID}>
                   <Link
-                    to={`/rumb/${rumb.id}`}
+                    to={`/rumb/${rumb.ID}`}
                     style={{
                       textDecoration: 'none',
                       display: 'block',
@@ -122,10 +122,10 @@ function LandingPage() {
                         e.currentTarget.style.transform = 'scale(1)';
                       }}>
                       {/* Изображение румба */}
-                      {rumb.image && (
+                      {rumb.Image && (
                         <img
-                          src={rumb.image}
-                          alt={rumb.direction}
+                          src={rumb.Image}
+                          alt={rumb.Title}
                           style={{
                             width: '120px',
                             height: '120px',
@@ -143,19 +143,8 @@ function LandingPage() {
                           color: '#000',
                           marginBottom: '15px',
                         }}>
-                        {rumb.direction}
+                        {rumb.Title}
                       </h3>
-
-                      {/* Описание */}
-                      <p
-                        style={{
-                          fontSize: '16px',
-                          color: '#666',
-                          marginBottom: '0',
-                          textAlign: 'center',
-                        }}>
-                        {rumb.description}
-                      </p>
                     </div>
                   </Link>
                 </Carousel.Item>
