@@ -12,20 +12,27 @@ console.log('Регистрация Service Worker...');
 const updateSW = registerSW({
   onNeedRefresh() {
     console.log('Требуется обновление приложения');
-    if (confirm('Доступно обновление приложения. Обновить сейчас?')) {
-      updateSW(true);
-    }
+    // Показываем уведомление пользователю
+    const event = new CustomEvent('sw-update-available');
+    window.dispatchEvent(event);
   },
   onOfflineReady() {
     console.log('Приложение готово к работе в офлайн режиме');
+    // Показываем уведомление о готовности к офлайн работе
+    const event = new CustomEvent('sw-offline-ready');
+    window.dispatchEvent(event);
   },
   onRegistered(r) {
-    console.log('SW Registered: ' + r);
+    console.log('SW Registered: ', r);
   },
   onRegisterError(error) {
-    console.log('SW registration error', error);
+    console.log('SW registration error: ', error);
   },
+  immediate: true,
 });
+
+// Экспортируем функцию обновления для использования в компонентах
+window.updateSW = updateSW;
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

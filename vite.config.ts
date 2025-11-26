@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt',
       devOptions: {
         enabled: true,
         type: 'module',
@@ -16,6 +16,9 @@ export default defineConfig({
       strategies: 'generateSW',
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        cleanupOutdatedCaches: true,
+        skipWaiting: true,
+        clientsClaim: true,
         runtimeCaching: [
           {
             urlPattern: /\/images\/rumbs\/.*/i,
@@ -30,7 +33,7 @@ export default defineConfig({
           },
         ],
       },
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+      includeAssets: ['favicon.ico', 'icon-192.svg', 'icon-512.svg'],
       manifest: {
         name: 'Toeing - Румбы ветров',
         short_name: 'Toeing',
@@ -40,22 +43,40 @@ export default defineConfig({
         display: 'standalone',
         scope: '/RIP_Toeing_Frontend/',
         start_url: '/RIP_Toeing_Frontend/',
+        categories: ['utilities', 'productivity'],
+        screenshots: [
+          {
+            src: '/RIP_Toeing_Frontend/icon-512.svg',
+            sizes: '512x512',
+            type: 'image/svg+xml',
+            form_factor: 'wide',
+            label: 'Toeing Application',
+          },
+        ],
         icons: [
           {
-            src: 'pwa-192x192.png',
+            src: '/RIP_Toeing_Frontend/icon-192.svg',
             sizes: '192x192',
-            type: 'image/png',
+            type: 'image/svg+xml',
+            purpose: 'any',
           },
           {
-            src: 'pwa-512x512.png',
+            src: '/RIP_Toeing_Frontend/icon-512.svg',
             sizes: '512x512',
-            type: 'image/png',
+            type: 'image/svg+xml',
+            purpose: 'any',
           },
           {
-            src: 'pwa-512x512.png',
+            src: '/RIP_Toeing_Frontend/icon-192.svg',
+            sizes: '192x192',
+            type: 'image/svg+xml',
+            purpose: 'maskable',
+          },
+          {
+            src: '/RIP_Toeing_Frontend/icon-512.svg',
             sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable',
+            type: 'image/svg+xml',
+            purpose: 'maskable',
           },
         ],
       },

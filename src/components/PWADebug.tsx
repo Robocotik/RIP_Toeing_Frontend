@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Alert } from 'react-bootstrap';
+import {useEffect, useState} from 'react';
+import {Alert} from 'react-bootstrap';
 
 function PWADebug() {
   const [pwaInfo, setPwaInfo] = useState<string[]>([]);
@@ -7,11 +7,11 @@ function PWADebug() {
 
   useEffect(() => {
     const info: string[] = [];
-    
+
     // Проверяем Service Worker
     if ('serviceWorker' in navigator) {
       info.push('✅ Service Worker поддерживается');
-      
+
       navigator.serviceWorker.getRegistrations().then(registrations => {
         if (registrations.length > 0) {
           info.push(`✅ Service Worker зарегистрирован (${registrations.length})`);
@@ -56,17 +56,15 @@ function PWADebug() {
   }
 
   return (
-    <Alert variant={isInstalled ? 'success' : 'info'} className="mx-3 mt-2">
+    <Alert variant={isInstalled ? 'success' : 'info'} className='mx-3 mt-2'>
       <strong>PWA Status:</strong>
-      <ul className="mb-0 mt-2" style={{ fontSize: '12px' }}>
+      <ul className='mb-0 mt-2' style={{fontSize: '12px'}}>
         {pwaInfo.map((info, index) => (
           <li key={index}>{info}</li>
         ))}
       </ul>
       {!isInstalled && (
-        <small className="d-block mt-2">
-          💡 Добавьте ?debug=1 к URL для отладки в production
-        </small>
+        <small className='d-block mt-2'>💡 Добавьте ?debug=1 к URL для отладки в production</small>
       )}
     </Alert>
   );

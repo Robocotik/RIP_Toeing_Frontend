@@ -4,6 +4,7 @@ import NavigationBar from './components/NavigationBar';
 import NetworkStatus from './components/NetworkStatus';
 import PWADebug from './components/PWADebug';
 import PWAInstallPrompt from './components/PWAInstallPrompt';
+import PWAUpdatePrompt from './components/PWAUpdatePrompt';
 import FlyRequestPage from './pages/FlyRequestPage';
 import LandingPage from './pages/LandingPage';
 import RumbDetailPage from './pages/RumbDetailPage';
@@ -15,6 +16,7 @@ function App() {
       <NavigationBar />
       <NetworkStatus />
       <PWADebug />
+      <PWAUpdatePrompt />
       <PWAInstallPrompt className='mx-3 mt-3' />
       <Routes>
         <Route path='/' element={<LandingPage />} />
