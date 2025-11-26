@@ -61,6 +61,7 @@ function FlyRequestPage() {
 
   const breadcrumbItems = [
     { label: 'Главная', path: '/' },
+    { label: 'Румбы', path: '/rumbs' },
     { label: 'Заявка', path: null },
   ];
 
@@ -79,7 +80,7 @@ function FlyRequestPage() {
 
         {flyRequest.length === 0 ? (
           <Alert variant='info'>
-            Заявка пуста. <Link to='/'>Перейти к румбам</Link>
+            Заявка пуста. <Link to='/rumbs'>Перейти к румбам</Link>
           </Alert>
         ) : (
           <>

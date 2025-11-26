@@ -1,4 +1,4 @@
-import {fetchRumbById as fetchMockRumbById, fetchRumbs as fetchMockRumbs} from '../data/mockRumbs';
+import {fetchRumbById as fetchMockRumbById, fetchRumbs as fetchMockRumbs} from '../data/mockRumbs.ts';
 import {Rumb, RumbFilters} from '../types';
 
 const API_BASE_URL = '/api';

@@ -1,22 +1,15 @@
-import { ChangeEvent, useEffect, useState } from 'react';
-import { Alert, Button, Card, Col, Container, Form, Row, Spinner } from 'react-bootstrap';
-import { useNavigate, useParams } from 'react-router-dom';
-import { getRumbById } from '../api/rumbs';
-import Breadcrumbs from '../components/Breadcrumbs';
-import { useFlyRequest } from '../context/FlyRequestContext';
-import { Rumb } from '../types';
+import {useEffect, useState} from 'react';
+import {Alert, Card, Container, Spinner} from 'react-bootstrap';
+import {useParams} from 'react-router-dom';
+import {getRumbById} from '../api/rumbs.ts';
+import {Rumb} from '../types';
 
 function RumbDetailPage() {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-  const { addToFlyRequest } = useFlyRequest();
+  const {id} = useParams<{id: string}>();
 
   const [rumb, setRumb] = useState<Rumb | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [distance, setDistance] = useState<string>('');
-  const [speed, setSpeed] = useState<string>('');
-  const [result, setResult] = useState<string | null>(null);
 
   useEffect(() => {
     loadRumb();
@@ -32,8 +25,6 @@ function RumbDetailPage() {
       const data = await getRumbById(id);
       if (data) {
         setRumb(data);
-        setDistance(data.distance.toString());
-        setSpeed(data.speed.toString());
       } else {
         setError('Румб не найден');
       }
@@ -44,37 +35,6 @@ function RumbDetailPage() {
       setLoading(false);
     }
   };
-
-  const calculateTime = () => {
-    const dist = parseFloat(distance);
-    const spd = parseFloat(speed);
-
-    if (dist > 0 && spd > 0) {
-      const hours = dist / spd;
-      const h = Math.floor(hours);
-      const minutes = (hours - h) * 60;
-      const m = Math.floor(minutes);
-      const seconds = (minutes - m) * 60;
-      const s = Math.floor(seconds);
-
-      setResult(`${h} ч. ${m} мин. ${s} сек.`);
-    }
-  };
-
-  const handleAddToFlyRequest = () => {
-    if (rumb && distance && speed) {
-      addToFlyRequest(rumb, { distance, speed });
-      navigate('/flyRequest');
-    }
-  };
-
-  const defaultImage =
-    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='%2317a2b8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='40' fill='white'%3EToeing%3C/text%3E%3C/svg%3E";
-
-  const breadcrumbItems = [
-    { label: 'Главная', path: '/' },
-    { label: 'Румб ветра', path: null },
-  ];
 
   if (loading) {
     return (
@@ -94,74 +54,43 @@ function RumbDetailPage() {
   }
 
   return (
-    <>
-      <Breadcrumbs items={breadcrumbItems} />
-      <Container className='py-4'>
-        <h2 className='text-center mb-4'>Румб ветра</h2>
-        <h3 className='text-center mb-5'>{rumb.direction}</h3>
+    <Container className='py-5' style={{maxWidth: '600px'}}>
+      {/* Заголовки */}
+      <div className='text-center mb-4'>
+        <h5 style={{fontSize: '18px', fontWeight: '400', color: '#666', marginBottom: '8px'}}>
+          Румб ветра
+        </h5>
+        <h2 style={{fontSize: '32px', fontWeight: '600', color: '#000', marginBottom: '30px'}}>
+          {rumb.direction}
+        </h2>
+      </div>
 
-        <Row className='justify-content-center'>
-          <Col md={8}>
-            <Card className='shadow-sm'>
-              <Card.Img
-                variant='top'
-                src={rumb.image || defaultImage}
-                alt={rumb.direction}
-                style={{ height: '300px', objectFit: 'cover' }}
-              />
-              <Card.Body>
-                <Card.Text className='mb-4'>{rumb.description}</Card.Text>
-
-                <Form>
-                  <Row className='mb-3'>
-                    <Col md={4}>
-                      <Form.Label>{rumb.direction}</Form.Label>
-                    </Col>
-                    <Col md={3}>
-                      <Form.Control
-                        type='number'
-                        value={distance}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => setDistance(e.target.value)}
-                        placeholder='50'
-                      />
-                    </Col>
-                    <Col md={2}>
-                      <Form.Text className='text-muted'>км</Form.Text>
-                    </Col>
-                    <Col md={3}>
-                      <Form.Control
-                        type='number'
-                        value={speed}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => setSpeed(e.target.value)}
-                        placeholder='7'
-                      />
-                    </Col>
-                    <Col md={12} className='text-end mt-1'>
-                      <Form.Text className='text-muted'>км/ч</Form.Text>
-                    </Col>
-                  </Row>
-
-                  <div className='text-center mt-4'>
-                    <Button variant='info' className='me-2 text-white' onClick={calculateTime}>
-                      Рассчитать время
-                    </Button>
-                    <Button variant='success' onClick={handleAddToFlyRequest}>
-                      Добавить в заявку
-                    </Button>
-                  </div>
-
-                  {result && (
-                    <div className='text-center mt-4'>
-                      <h5>Результат: {result}</h5>
-                    </div>
-                  )}
-                </Form>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </>
+      {/* Карточка с изображением */}
+      <Card
+        className='shadow-sm mb-4'
+        style={{
+          borderRadius: '15px',
+          overflow: 'hidden',
+          border: 'none',
+        }}>
+        <Card.Img
+          variant='top'
+          src={rumb.image || `http://localhost:9000/rumbs/arrow-north.svg`}
+          alt={rumb.direction}
+          style={{
+            height: '300px',
+            objectFit: 'contain',
+            backgroundColor: '#f8f9fa',
+            padding: '40px',
+          }}
+        />
+        <Card.Body>
+          <Card.Text style={{fontSize: '16px', color: '#666', textAlign: 'center'}}>
+            {rumb.description}
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }
 

@@ -17,16 +17,8 @@ function NavigationBar() {
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='ms-auto'>
-            <Nav.Link as={Link} to='/' active={location.pathname === '/'}>
+            <Nav.Link as={Link} to='/rumbs' active={location.pathname === '/'}>
               Главная
-            </Nav.Link>
-            <Nav.Link as={Link} to='/flyRequest' active={location.pathname === '/flyRequest'}>
-              Заявка
-              {flyRequestItemsCount > 0 && (
-                <Badge bg='info' className='ms-2'>
-                  {flyRequestItemsCount}
-                </Badge>
-              )}
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

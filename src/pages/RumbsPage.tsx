@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
-import { Alert, Col, Container, Row, Spinner } from 'react-bootstrap';
-import { getRumbs } from '../api/rumbs';
-import Breadcrumbs from '../components/Breadcrumbs';
+import {useEffect, useState} from 'react';
+import {Alert, Col, Container, Row, Spinner} from 'react-bootstrap';
+import {getRumbs} from '../api/rumbs.ts';
 import RumbCard from '../components/RumbCard';
 import RumbFilters from '../components/RumbFilters';
-import { Rumb, RumbFilters as RumbFiltersType } from '../types';
+import {Rumb, RumbFilters as RumbFiltersType} from '../types';
 
-function HomePage() {
+function RumbsPage() {
   const [rumbs, setRumbs] = useState<Rumb[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -57,8 +56,6 @@ function HomePage() {
     loadRumbs(resetFilters);
   };
 
-  const breadcrumbItems = [{ label: 'Главная', path: null }];
-
   return (
     <>
       <Container className='py-4'>
@@ -68,7 +65,6 @@ function HomePage() {
           onSearch={handleSearch}
           onReset={handleReset}
         />
-        <Breadcrumbs items={breadcrumbItems} />
         <div className='text-center mb-5'>
           <h1 className='display-4 mb-3'>Румбы ветров</h1>
           <p className='lead text-muted'>
@@ -91,8 +87,8 @@ function HomePage() {
 
         {!loading && !error && rumbs.length > 0 && (
           <Row xs={1} md={2} lg={3} className='g-4'>
-            {rumbs.map((rumb) => {
-              if (rumb.id === 5) {
+            {rumbs.map(rumb => {
+              if (rumb.id === 3) {
                 return (
                   <>
                     <Col key={`${rumb.id}-center`}>
@@ -121,4 +117,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default RumbsPage;
