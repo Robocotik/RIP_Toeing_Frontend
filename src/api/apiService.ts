@@ -1,10 +1,8 @@
-// Если прокси не работает, раскомментируйте эту строку:
-
 import type {Rumb} from '../types';
+import {dest_api, dest_img} from '../../target_config';
 
-// const API_BASE_URL = 'http://localhost:8080';
-const API_BASE_URL = '/api';
-const MINIO_BASE_URL = 'http://localhost:9000';
+const API_BASE_URL = dest_api;
+const MINIO_BASE_URL = dest_img;
 
 class ApiService {
   async getRumbs(): Promise<Rumb[]> {
