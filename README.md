@@ -5,6 +5,6 @@
 
 Ссылки
 GitHubPages: https://robocotik.github.io/RIP_Toeing_Frontend
-Бэкенд (основной веб-сервис): [hhttps://github.com/Robocotik/RIP_Toeing_Backend
+Бэкенд (основной веб-сервис): https://github.com/Robocotik/RIP_Toeing_Backend
 Бэкенд (асинхронный сервис): https://github.com/Robocotik/RIP_Toeing_Async
 Фронтенд: https://github.com/Robocotik/RIP_Toeing_Frontend
